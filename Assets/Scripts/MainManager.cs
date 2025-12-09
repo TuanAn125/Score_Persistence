@@ -72,11 +72,10 @@ public class MainManager : MonoBehaviour
     void GetData()
     {
         int m_SavedPoint = GameManager.instance.score;
+        string m_Username = GameManager.instance.currentUsername;
         if (m_Points > m_SavedPoint)
         {
-            GameManager.instance.bestUsername = GameManager.instance.currentUsername;
-            GameManager.instance.score = m_Points;
-            GameManager.instance.SaveRecords();
+            GameManager.instance.SaveRecords(m_Username, m_Points);
         }
     }
 

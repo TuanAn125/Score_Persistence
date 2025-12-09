@@ -30,10 +30,10 @@ public class GameManager : MonoBehaviour
     }
 
     // Ok, I'm going to make a save/load data methods here
-    public void SaveRecords()
+    public void SaveRecords(string username, int score)
     {
         SaveData data = new SaveData();
-        data.bestUsername = bestUsername;
+        data.bestUsername = username;
         data.score = score;
 
         // Data is created. It'll be saved in a json file
