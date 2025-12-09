@@ -22,6 +22,7 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UpdateScore();
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
 
@@ -68,22 +69,21 @@ public class MainManager : MonoBehaviour
         ScoreText.text = $"Score : {m_Points}";
     }
 
-    ///When game starts, Best score text shows data from saved record
-    /// If there's no record, it shows default as 0
-    /// I'll load data and set conditon for Best score text first
-    void GetBestScore()
-    {
-        bestScoreText.text = $"Best score: {GameManager.instance.username}: {GameManager.instance.score}";
-    }
-
-    /// When game over, get the score data from ScoreText, save it
-    /// If there is a score saved, compare it, show the higher score on the BestScore
-    /// If save many score, I may need an array
     void GetData()
     {
-        GameManager.instance.score = m_Points;
-        GameManager.instance.SaveRecords();
-        bestScoreText.text = $"Best score: {GameManager.instance.username}: {GameManager.instance.score}";
+        int m_SavedPoint = GameManager.instance.score;
+        if (m_Points > m_SavedPoint)
+        {
+            GameManager.instance.bestUsername = GameManager.instance.currentUsername;
+            GameManager.instance.score = m_Points;
+            GameManager.instance.SaveRecords();
+        }
+    }
+
+    void UpdateScore()
+    {
+        GameManager.instance.LoadRecords();
+        bestScoreText.text = $"Best score: {GameManager.instance.bestUsername}: {GameManager.instance.score}";
     }
 
     public void GameOver()
@@ -91,5 +91,6 @@ public class MainManager : MonoBehaviour
         GetData();
         m_GameOver = true;
         GameOverText.SetActive(true);
+        UpdateScore();
     }
 }

@@ -6,7 +6,8 @@ public class GameManager : MonoBehaviour
     //Purpose: Manage storable data such as names and highscores
 
     public static GameManager instance;
-    public string username = "";
+    public string currentUsername = "";
+    public string bestUsername = "";
     public int score = 0;
 
     void Awake()
@@ -24,16 +25,16 @@ public class GameManager : MonoBehaviour
     [System.Serializable]
     class SaveData
     {
-        public string s_username;
-        public int s_score;
+        public string bestUsername;
+        public int score;
     }
 
     // Ok, I'm going to make a save/load data methods here
     public void SaveRecords()
     {
         SaveData data = new SaveData();
-        data.s_username = username;
-        data.s_score = score;
+        data.bestUsername = bestUsername;
+        data.score = score;
 
         // Data is created. It'll be saved in a json file
         // To do that, I need methods from JsonUtility
@@ -53,8 +54,8 @@ public class GameManager : MonoBehaviour
         {
             string json = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(json);
-            username = data.s_username;
-            score = data.s_score;
+            bestUsername = data.bestUsername;
+            score = data.score;
         }
     }
 }

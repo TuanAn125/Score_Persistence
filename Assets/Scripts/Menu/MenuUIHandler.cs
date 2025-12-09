@@ -15,14 +15,14 @@ public class MenuUIHandler : MonoBehaviour
 
     void Start()
     {
-        highScoreText.text = $"Best score: {GameManager.instance.username}: {GameManager.instance.score}";
+        highScoreText.text = $"Best score: {GameManager.instance.bestUsername}: {GameManager.instance.score}";
     }
 
     // Create functions for Start and Quit
     public void NewGame()
     {
-        GameManager.instance.username = usernameInput.text;
-        if (GameManager.instance.username != "")
+        GameManager.instance.currentUsername = usernameInput.text;
+        if (GameManager.instance.currentUsername != "")
         {
             SceneManager.LoadScene(1);
         }

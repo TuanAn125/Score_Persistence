@@ -292,8 +292,8 @@ Camera:
   m_GameObject: {fileID: 54236114}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1361,8 +1361,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1612,8 +1612,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c24e30fe48aab640b613e1ade31ddc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  username: 
-  highScore: 0
+  currentUsername: 
+  bestUsername: 
+  score: 0
 --- !u!4 &1820188399
 Transform:
   m_ObjectHideFlags: 0
