@@ -71,23 +71,31 @@ public class MainManager : MonoBehaviour
 
     void GetData()
     {
-        int m_SavedPoint = GameManager.instance.score;
-        string m_Username = GameManager.instance.currentUsername;
-        if (m_Points > m_SavedPoint)
-        {
-            GameManager.instance.SaveRecords(m_Username, m_Points);
-        }
+        // int m_SavedPoint = GameManager.instance.score;
+        // string m_Player = GameManager.instance.playerName;
+        // if (m_Points > m_SavedPoint)
+        // {
+        //     GameManager.instance.Save(m_Player, m_Points);
+        // }
+        // Debug.Log(m_Player);
+        // Debug.Log(m_SavedPoint);
     }
 
     void UpdateScore()
     {
-        GameManager.instance.LoadRecords();
-        bestScoreText.text = $"Best score: {GameManager.instance.bestUsername}: {GameManager.instance.score}";
+        GameManager.instance.Load();
+        bestScoreText.text = $"Best score: {GameManager.instance.playerName}: {GameManager.instance.score}";
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public void GameOver()
     {
         GetData();
+        GameManager.instance.Save(GameManager.instance.playerName, m_Points);
         m_GameOver = true;
         GameOverText.SetActive(true);
         UpdateScore();
