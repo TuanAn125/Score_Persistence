@@ -1831,7 +1831,7 @@ GameObject:
   - component: {fileID: 1437921810}
   - component: {fileID: 1437921811}
   m_Layer: 5
-  m_Name: HighScore List
+  m_Name: Records List
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1894,7 +1894,7 @@ GameObject:
   - component: {fileID: 1623328972}
   - component: {fileID: 1623328971}
   m_Layer: 5
-  m_Name: HighScorePanel
+  m_Name: Leaderboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2131,7 +2131,8 @@ MonoBehaviour:
   highScoreText: {fileID: 1427104159}
   usernameInput: {fileID: 704027654}
   panel: {fileID: 1623328969}
-  elementList: {fileID: 1437921809}
+  recordPrefab: {fileID: 3145053926182558885, guid: 0998c26ad6d17f74284003f842c47626, type: 3}
+  wrapper: {fileID: 1437921810}
 --- !u!1 &1820188397
 GameObject:
   m_ObjectHideFlags: 0

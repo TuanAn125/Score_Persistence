@@ -5,13 +5,14 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    List<Player> records = new List<Player>();
+    List<Player> records = new();
     int maxCount = 5;
 
-    // When the highscore board is finished, single playerName and score is not needed anymore
-    // I'll find a way to remove it
     public string playerName = "";
     public int score;
+
+    public delegate void OnLeaderboardChanged(List<Player> list);
+    public static event OnLeaderboardChanged onLeaderboardChanged;
 
     void Awake()
     {
@@ -22,15 +23,10 @@ public class GameManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
         Load();
-
-        // foreach (Player el in records)
-        // {
-        //     Debug.Log(el.playerName);
-        //     Debug.Log(el.score);
-        // }
     }
+
     [System.Serializable]
-    class Player
+    public class Player
     {
         public string playerName;
         public int score;
@@ -47,6 +43,7 @@ public class GameManager : MonoBehaviour
     {
         public List<Player> records;
     }
+
     public void Save(string playerName, int score)
     {
         Records data = new();
@@ -71,6 +68,14 @@ public class GameManager : MonoBehaviour
             string json = File.ReadAllText(path);
             Records data = JsonUtility.FromJson<Records>(json);
             records = data.records;
+
+            while (records.Count > maxCount)
+            {
+                records.RemoveAt(maxCount);
+            }
+
+            //Onchange != null, then trigger
+            onLeaderboardChanged?.Invoke(records);
         }
     }
 }
