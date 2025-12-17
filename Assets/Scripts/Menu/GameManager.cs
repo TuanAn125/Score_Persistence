@@ -5,11 +5,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    List<Player> records = new();
-    int maxCount = 5;
+    [SerializeField] List<Player> records = new();
+    [SerializeField] int maxCount = 5;
 
     public string playerName = "";
-    public int score;
 
     public delegate void OnLeaderboardChanged(List<Player> list);
     public static event OnLeaderboardChanged onLeaderboardChanged;
@@ -24,6 +23,9 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         Load();
     }
+
+    // Make fetching data from the list available
+    public IReadOnlyList<Player> record => records;
 
     [System.Serializable]
     public class Player

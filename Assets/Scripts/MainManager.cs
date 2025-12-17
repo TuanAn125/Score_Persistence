@@ -14,15 +14,13 @@ public class MainManager : MonoBehaviour
     public GameObject GameOverText;
 
     private bool m_Started = false;
+    private string m_Player = GameManager.instance.playerName;
     private int m_Points;
-
     private bool m_GameOver = false;
 
-
-    // Start is called before the first frame update
     void Start()
     {
-        UpdateScore();
+        UpdateTop();
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
 
@@ -69,35 +67,22 @@ public class MainManager : MonoBehaviour
         ScoreText.text = $"Score : {m_Points}";
     }
 
-    void GetData()
+    void UpdateTop()
     {
-        // int m_SavedPoint = GameManager.instance.score;
-        // string m_Player = GameManager.instance.playerName;
-        // if (m_Points > m_SavedPoint)
-        // {
-        //     GameManager.instance.Save(m_Player, m_Points);
-        // }
-        // Debug.Log(m_Player);
-        // Debug.Log(m_SavedPoint);
+        GameManager.Player firstPos = GameManager.instance.record[0];
+        bestScoreText.text = $"Best score: {firstPos.playerName}: {firstPos.score}";
     }
 
-    void UpdateScore()
+    public void GameOver()
     {
-        GameManager.instance.Load();
-        bestScoreText.text = $"Best score: {GameManager.instance.playerName}: {GameManager.instance.score}";
+        GameManager.instance.Save(m_Player, m_Points);
+        m_GameOver = true;
+        GameOverText.SetActive(true);
+        UpdateTop();
     }
 
     public void BackToMenu()
     {
         SceneManager.LoadScene(0);
-    }
-
-    public void GameOver()
-    {
-        GetData();
-        GameManager.instance.Save(GameManager.instance.playerName, m_Points);
-        m_GameOver = true;
-        GameOverText.SetActive(true);
-        UpdateScore();
     }
 }

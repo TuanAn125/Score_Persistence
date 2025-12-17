@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections.Generic;
 using Unity.Mathematics;
-using UnityEngine.UI;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -12,7 +11,6 @@ using UnityEditor;
 public class MenuUIHandler : MonoBehaviour
 {
     //Purpose: Handle UI clicks
-
     [SerializeField] TextMeshProUGUI highScoreText;
     [SerializeField] TMP_InputField usernameInput;
 
@@ -23,8 +21,8 @@ public class MenuUIHandler : MonoBehaviour
     List<GameObject> recordUIsList = new();
     void Start()
     {
-        highScoreText.text = $"Best score: {GameManager.instance.playerName}: {GameManager.instance.score}";
-        Debug.Log(recordUIsList.Count);
+        GameManager.Player firstPos = GameManager.instance.record[0];
+        highScoreText.text = $"Best score: {firstPos.playerName}: {firstPos.score}";
     }
 
     // Leaderboard handling
