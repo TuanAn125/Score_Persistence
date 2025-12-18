@@ -11,7 +11,7 @@ using UnityEditor;
 public class MenuUIHandler : MonoBehaviour
 {
     //Purpose: Handle UI clicks
-    [SerializeField] TextMeshProUGUI highScoreText;
+    [SerializeField] TextMeshProUGUI bestScoreText;
     [SerializeField] TMP_InputField usernameInput;
 
     // Leaderboard releated variables
@@ -21,8 +21,12 @@ public class MenuUIHandler : MonoBehaviour
     List<GameObject> recordUIsList = new();
     void Start()
     {
-        GameManager.Player firstPos = GameManager.instance.record[0];
-        highScoreText.text = $"Best score: {firstPos.playerName}: {firstPos.score}";
+        if (GameManager.instance.record.Count > 0)
+        {
+            GameManager.Player firstPos = GameManager.instance.record[0];
+            bestScoreText.text = $"Best score: {firstPos.playerName}: {firstPos.score}";
+        }
+        else bestScoreText.text = "(crickets' sound)";
     }
 
     // Leaderboard handling

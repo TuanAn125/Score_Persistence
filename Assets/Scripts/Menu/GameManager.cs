@@ -58,6 +58,11 @@ public class GameManager : MonoBehaviour
             else return b.score.CompareTo(a.score);
         });
 
+        while (records.Count > maxCount)
+        {
+            records.RemoveAt(maxCount);
+        }
+
         string json = JsonUtility.ToJson(data);
         File.WriteAllText(Application.persistentDataPath + "/record.json", json);
     }
@@ -70,11 +75,6 @@ public class GameManager : MonoBehaviour
             string json = File.ReadAllText(path);
             Records data = JsonUtility.FromJson<Records>(json);
             records = data.records;
-
-            while (records.Count > maxCount)
-            {
-                records.RemoveAt(maxCount);
-            }
 
             //Onchange != null, then trigger
             onLeaderboardChanged?.Invoke(records);

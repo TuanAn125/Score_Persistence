@@ -17,24 +17,12 @@ public class MainManager : MonoBehaviour
     private string m_Player = GameManager.instance.playerName;
     private int m_Points;
     private bool m_GameOver = false;
+    private int remaining;
 
     void Start()
     {
         UpdateTop();
-        const float step = 0.6f;
-        int perLine = Mathf.FloorToInt(4.0f / step);
-
-        int[] pointCountArray = new[] { 1, 1, 2, 2, 5, 5 };
-        for (int i = 0; i < LineCount; ++i)
-        {
-            for (int x = 0; x < perLine; ++x)
-            {
-                Vector3 position = new Vector3(-1.5f + step * x, 2.5f + i * 0.3f, 0);
-                var brick = Instantiate(BrickPrefab, position, Quaternion.identity);
-                brick.PointValue = pointCountArray[i];
-                brick.onDestroyed.AddListener(AddPoint);
-            }
-        }
+        AddBricks();
     }
 
     private void Update()
@@ -59,6 +47,11 @@ public class MainManager : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
+
+        if (remaining == 0)
+        {
+            AddBricks();
+        }
     }
 
     void AddPoint(int point)
@@ -69,8 +62,32 @@ public class MainManager : MonoBehaviour
 
     void UpdateTop()
     {
-        GameManager.Player firstPos = GameManager.instance.record[0];
-        bestScoreText.text = $"Best score: {firstPos.playerName}: {firstPos.score}";
+        if (GameManager.instance.record.Count > 0)
+        {
+            GameManager.Player firstPos = GameManager.instance.record[0];
+            bestScoreText.text = $"Best score: {firstPos.playerName}: {firstPos.score}";
+        }
+        else bestScoreText.text = "There is no one here";
+    }
+
+    void AddBricks()
+    {
+        const float step = 0.6f;
+        int perLine = Mathf.FloorToInt(4.0f / step);
+        remaining = LineCount * perLine;
+
+        int[] pointCountArray = new[] { 1, 1, 2, 2, 5, 5 };
+        for (int i = 0; i < LineCount; ++i)
+        {
+            for (int x = 0; x < perLine; ++x)
+            {
+                Vector3 position = new Vector3(-1.5f + step * x, 2.5f + i * 0.3f, 0);
+                var brick = Instantiate(BrickPrefab, position, Quaternion.identity);
+                brick.PointValue = pointCountArray[i];
+                brick.onDestroyed.AddListener(AddPoint);
+                brick.onDestroyed.AddListener(_ => remaining--);
+            }
+        }
     }
 
     public void GameOver()
